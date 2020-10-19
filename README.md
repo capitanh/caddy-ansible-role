@@ -1,7 +1,10 @@
 Caddy Ansible Role
 ==================
 
-This role will install caddy web server with php 7.4 support. It's managed as a systemd service and a simple configuration file is provides for caddy to work.
+This role will install caddy web server with php 7.4 support. It's managed as a systemd service and a simple configuration file is provides for caddy to work. Once it has finished, you can test it by pointing your browser to:
+
+http://[hostname]:[port]/phpinfo.php
+
 
 Requirements
 ------------

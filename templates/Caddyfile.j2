@@ -1,0 +1,11 @@
+localhost:80 {
+  root * {{root_folder}}
+  #encode zstd gzip
+  templates
+  file_server browse
+  php_fastcgi unix//run/php/php{{php_version}}-fpm.sock
+  log {
+    output file /var/log/caddy/caddy.log
+    format single_field common_log
+  }
+}

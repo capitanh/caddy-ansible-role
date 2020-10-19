@@ -1,0 +1,83 @@
+---
+# tasks file for caddy
+- name: Download caddy binary
+  unarchive:
+    src: "https://github.com/caddyserver/caddy/releases/download/v{{caddy_version}}/caddy_{{caddy_version}}_linux_amd64.tar.gz"
+    dest: /tmp
+    validate_certs: no
+    remote_src: yes
+
+- name: Move binary to final destination
+  copy:
+    src: /tmp/caddy
+    dest: "{{caddy_home}}"
+    remote_src: yes
+    mode: 0755
+
+- name: Create caddy user
+  user:
+    name: "{{caddy_user}}"
+    create_home: yes
+    home: /var/lib/caddy
+
+- name: Create config dir
+  file:
+    path: /etc/caddy
+    state: directory
+
+- name: Create web server root and log folders
+  file:
+    path: "{{item}}"
+    state: directory
+    recurse: yes
+    owner: "{{caddy_user}}"
+    group: "{{caddy_group}}"
+  with_items:
+    - "{{root_folder}}"
+    - "{{caddy_log_folder}}"
+
+- name: Transfer check files
+  copy:
+    src: "{{item}}"
+    dest: "{{root_folder}}"
+    owner: "{{caddy_user}}"
+    group: "{{caddy_group}}"
+    mode: 0644
+  with_items:
+    - phpinfo.php
+
+- name: transfer config file
+  template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    mode: 0644
+
+- name: transfer service file
+  template:
+    src: caddy.service.j2
+    dest: /etc/systemd/system/caddy.service
+    mode: 0644
+
+- name: Install php packages
+  apt:
+    name: "{{packages}}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - php-fpm
+    - php-mysql
+
+- name: Change php process owner
+  copy:
+    src: www.conf
+    dest: "/etc/php/{{php_version}}/fpm/pool.d"
+
+- name: Enable services
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: restarted
+  with_items:
+   - "php{{php_version}}-fpm"
+   - caddy

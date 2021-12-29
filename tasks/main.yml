@@ -25,6 +25,11 @@
     path: /etc/caddy
     state: directory
 
+- name: Create extra config dir
+  file:
+    path: /etc/caddy/sites-enabled
+    state: directory
+
 - name: Create web server root and log folders
   file:
     path: "{{item}}"

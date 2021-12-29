@@ -1,7 +1,7 @@
 ---
 caddy_user:         caddy           # system account
 caddy_group:        caddy           # System account primary group
-root_folder:        /var/www/html   # Location of web server root folder
+caddy_root_folder:  /var/www/html   # Location of web server root folder
 caddy_log_folder:   /var/log/caddy  # Log file folder
 caddy_version:      2.4.6           # Caddy software version
 caddy_home:         /usr/bin        # Location for caddy binary

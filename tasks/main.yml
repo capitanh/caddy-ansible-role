@@ -33,13 +33,13 @@
     owner: "{{caddy_user}}"
     group: "{{caddy_group}}"
   with_items:
-    - "{{root_folder}}"
+    - "{{caddy_root_folder}}"
     - "{{caddy_log_folder}}"
 
 - name: Transfer check files
   copy:
     src: "{{item}}"
-    dest: "{{root_folder}}"
+    dest: "{{caddy_root_folder}}"
     owner: "{{caddy_user}}"
     group: "{{caddy_group}}"
     mode: 0644

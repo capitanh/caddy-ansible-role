@@ -65,7 +65,7 @@
     update_cache: yes
   vars:
     packages:
-    - php-fpm
+    - "php{{php_version}}-fpm"
     - php-mysql
 
 - name: Change php process owner

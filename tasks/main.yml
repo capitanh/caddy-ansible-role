@@ -69,7 +69,7 @@
     - php-mysql
 
 - name: Change php process owner
-  template:
+  copy:
     src: www.conf
     dest: "/etc/php/{{php_version}}/fpm/pool.d"
 

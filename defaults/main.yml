@@ -1,4 +1,5 @@
 ---
+caddy_hostname:     localhost       # Host name
 caddy_user:         caddy           # system account
 caddy_group:        caddy           # System account primary group
 caddy_root_folder:  /var/www/html   # Location of web server root folder

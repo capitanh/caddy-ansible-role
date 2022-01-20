@@ -63,6 +63,10 @@
     dest: /etc/systemd/system/caddy.service
     mode: 0644
 
+- name: Add ppa for php8
+  apt_repository:
+    repo: ppa:ondrej/php
+
 - name: Install php packages
   apt:
     name: "{{packages}}"
